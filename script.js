@@ -1,35 +1,18 @@
-const checkboxes = Array.from(document.querySelectorAll("input[name]"));
+const checkboxes = [...document.querySelectorAll('input[type="checkbox"]')];
 
-const services = {
-  good: false,
-  cheap: false,
-  fast: false,
-};
+function getCheckbox(checkboxName) {
+  return checkboxes.find(({ name }) => name === checkboxName);
+}
 
 function getDiscarded(selected) {
-  if (selected === "good" && services.cheap) {
-    return "fast";
-  }
-
-  if (selected === "fast" && services.good) {
-    return "cheap";
-  }
-
-  if (selected === "cheap" && services.fast) {
-    return "good";
-  }
+  if (selected === "good" && getCheckbox("cheap").checked) return "fast";
+  if (selected === "fast" && getCheckbox("good").checked) return "cheap";
+  if (selected === "cheap" && getCheckbox("fast").checked) return "good";
 }
 
 function pickTwoServices({ target: { checked, name } }) {
-  services[name] = checked;
   const discarded = getDiscarded(name);
-
-  if (!services[name] || !discarded) return;
-
-  services[discarded] = false;
-  checkboxes.find(({ name }) => name === discarded).checked = false;
+  if (discarded && checked) getCheckbox(discarded).checked = false;
 }
 
-checkboxes.forEach(function (checkbox) {
-  checkbox.addEventListener("change", pickTwoServices);
-});
+checkboxes.forEach((el) => el.addEventListener("change", pickTwoServices));
