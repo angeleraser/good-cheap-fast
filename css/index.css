@@ -41,6 +41,10 @@
   font-weight: 500;
 }
 
+.toggler-checkbox {
+  display: none;
+}
+
 .toggler-area {
   display: flex;
   align-items: center;
@@ -64,14 +68,10 @@
   transition: 0.3s margin-left;
 }
 
-.toggler input[type="checkbox"] {
-  display: none;
-}
-
-.toggler input[type="checkbox"]:checked + .toggler-area {
+.toggler-checkbox:checked + .toggler-area {
   background-color: var(--purple);
 }
 
-.toggler input[type="checkbox"]:checked + .toggler-area::after {
+.toggler-checkbox:checked + .toggler-area::after {
   margin-left: var(--toggler-size);
 }
